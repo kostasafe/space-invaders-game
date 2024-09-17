@@ -1,5 +1,7 @@
 import turtle
 import os
+import math
+import random
 
 #seting up screen
 myscreen = turtle.Screen()
@@ -26,7 +28,7 @@ player.color("yellow")
 player.shape("triangle")
 player.penup()
 player.speed(0)
-player.setposition(0,-270)
+player.setposition(0,-250)
 player.setheading(90)
 
 playerspeed = 15
@@ -88,35 +90,67 @@ gunspeed = 20
 gunstate = "ready"
 
 
+
+#Number of enemies
+number_of_enemies = 5
+#List
+enemies = []
+
+#Add enemies in list
+for i in range(number_of_enemies):
+     #enemy creation
+     enemies.append(turtle.Turtle())
+
 #Enemies
-enemy = turtle.Turtle()
-enemy.color("red")
-enemy.shape("circle")
-enemy.penup()
-enemy.speed(0)
-enemy.setposition(-200, 250)
+for enemy in enemies:
+        #enemy = turtle.Turtle()
+        enemy.color("red")
+        enemy.shape("circle")
+        enemy.penup()
+        enemy.speed(0)
+        x = random.randint(-200, 200)
+        y = random.randint(100, 250)
+        enemy.setposition(x, y)
 
 enemyspeed = 2
 
 #Game loop
 while True:
 
-    #enemy movement
-    x = enemy.xcor()
-    x += enemyspeed
-    enemy.setx(x)
-    
-    if enemy.xcor() > +280:
-        y = enemy.ycor()
-        y -=  40
-        enemyspeed *= -1
-        enemy.sety(y)
-    
-    if enemy.xcor() < -280:
-        y = enemy.ycor()
-        y -=  40
-        enemyspeed *= -1
-        enemy.sety(y)
+    for enemy in enemies:
+        #enemy movement
+        x = enemy.xcor()
+        x += enemyspeed
+        enemy.setx(x)
+        
+        if enemy.xcor() > +280:
+            y = enemy.ycor()
+            y -=  40
+            enemyspeed *= -1
+            enemy.sety(y)
+        
+        if enemy.xcor() < -280:
+            y = enemy.ycor()
+            y -=  40
+            enemyspeed *= -1
+            enemy.sety(y)
+
+        #collision check between enemy and shot
+        if isCollision(gun, enemy):
+            #reset shot
+            gun.hideturtle()
+            gunstate = "ready"
+            gun.setposition(0, -400)
+            #Reset enemy
+            x = random.randint(-200, 200)
+            y = random.randint(100, 250)
+            enemy.setposition(x, y)
+
+        if isCollision(player, enemy):
+            player.hideturtle()
+            enemy.hideturtle()
+            print ("Game Over")
+            break
 
     #bullet movement
     if gunstate == "fire":
@@ -129,20 +163,6 @@ while True:
         gun.hideturtle()
         gunstate = "ready"
     
-    #collision check between enemy and shot
-    if isCollision(gun, enemy):
-        #reset shot
-        gun.hideturtle()
-        gunstate = "ready"
-        gun.setposition(0, -400)
-        #Reset enemy
-        enemy.setposition(-200, 250)
-    
-    if isCollision(player, enemy):
-        player.hideturtle()
-        enemy.hideturtle()
-        print ("Game Over")
-        break
 
 
 delay =  input("Press enter to finish.")
