@@ -26,7 +26,7 @@ player.color("yellow")
 player.shape("triangle")
 player.penup()
 player.speed(0)
-player.setposition(0,-250)
+player.setposition(0,-270)
 player.setheading(90)
 
 playerspeed = 15
@@ -43,7 +43,7 @@ def move_right():
     x = player.xcor()
     x += playerspeed
     if x > +280:
-        x= +280
+        x = +280
     player.setx(x)
 
 def fire_gun():
@@ -53,10 +53,17 @@ def fire_gun():
         gunstate = "fire"
         #gun position just above player
         x = player.xcor()
-        y = player.ycor() +10
+        y = player.ycor() + 10
         gun.setposition(x,y)
         gun.showturtle()
 
+def isCollision(t1, t2):
+	distance = math.sqrt(math.pow(t1.xcor()-t2.xcor(),2)+math.pow(t1.ycor()-t2.ycor(),2))
+	if distance < 15:
+		return True
+	else:
+		return False
+     
 #Keyboard Bindings
 turtle.listen()
 turtle.onkey(move_left,"Left")
@@ -87,7 +94,7 @@ enemy.color("red")
 enemy.shape("circle")
 enemy.penup()
 enemy.speed(0)
-enemy.setposition(-200,250)
+enemy.setposition(-200, 250)
 
 enemyspeed = 2
 
@@ -108,7 +115,7 @@ while True:
     if enemy.xcor() < -280:
         y = enemy.ycor()
         y -=  40
-        enemyspeed *=-1
+        enemyspeed *= -1
         enemy.sety(y)
 
     #bullet movement
@@ -121,5 +128,21 @@ while True:
     if gun.ycor() > 275:
         gun.hideturtle()
         gunstate = "ready"
+    
+    #collision check between enemy and shot
+    if isCollision(gun, enemy):
+        #reset shot
+        gun.hideturtle()
+        gunstate = "ready"
+        gun.setposition(0, -400)
+        #Reset enemy
+        enemy.setposition(-200, 250)
+    
+    if isCollision(player, enemy):
+        player.hideturtle()
+        enemy.hideturtle()
+        print ("Game Over")
+        break
+
 
 delay =  input("Press enter to finish.")
