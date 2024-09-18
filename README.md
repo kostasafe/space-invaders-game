@@ -54,3 +54,6 @@ A simple Space Invaders clone using Python and the Turtle graphics library. Play
  - Shooting: The player can shoot bullets, but only one at a time. Once the bullet hits an enemy or moves off-screen, you can shoot again.
  - Enemies: A group of enemies moves from side to side, descending slowly. If any enemy touches your spaceship, it's game over.
  - Enemy Speed: Enemies move faster as they descend, adding more challenge as the game progresses.
+
+
+ *UNDER CONSTRUCTION...*
