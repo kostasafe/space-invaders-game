@@ -21,6 +21,17 @@ for side in range(4):
     border_pen.lt(90)
 border_pen.hideturtle()
 
+#Score 
+score = 0
+
+score_pen = turtle.Turtle()
+score_pen.speed(0)
+score_pen.color("white")
+score_pen.penup()
+score_pen.setposition(-290, 275)
+scorestring = "Score: %s" %score
+score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
+score_pen.hideturtle()
 
 #Player Turtle
 player = turtle.Turtle()
@@ -124,16 +135,19 @@ while True:
         enemy.setx(x)
         
         if enemy.xcor() > +280:
-            y = enemy.ycor()
-            y -=  40
+            for e in enemies: #to move all enemies down if one touches the side
+                y = e.ycor()
+                y -=  40
+                e.sety(y)
             enemyspeed *= -1
-            enemy.sety(y)
         
         if enemy.xcor() < -280:
-            y = enemy.ycor()
-            y -=  40
+            for e in enemies:
+                y = e.ycor()
+                y -=  40
+                e.sety(y)
             enemyspeed *= -1
-            enemy.sety(y)
+
 
         #collision check between enemy and shot
         if isCollision(gun, enemy):
@@ -145,6 +159,13 @@ while True:
             x = random.randint(-200, 200)
             y = random.randint(100, 250)
             enemy.setposition(x, y)
+            #score count
+            score += 10
+            scorestring = "Score: %s" %score
+            score_pen.clear()
+            score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
+
+
 
         if isCollision(player, enemy):
             player.hideturtle()
