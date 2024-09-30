@@ -2,16 +2,22 @@ import turtle
 import os
 import math
 import random
+from playsound import playsound
+from threading import Thread
 
 #seting up screen
 myscreen = turtle.Screen()
 myscreen.bgcolor("black")
 myscreen.title("Space Invaders")
 myscreen.bgpic("space_invaders_background.gif")
+myscreen.tracer(0)
 
 #Register the shapes
-turtle.register_shape("invader.gif")
-turtle.register_shape("player.gif")
+myscreen.register_shape("invader.gif")
+myscreen.register_shape("player.gif")
+
+def play_sound_async(sound_file):
+    Thread(target=playsound, args=(sound_file,), daemon=True).start()
 
 #Border drawing
 border_pen = turtle.Turtle()
@@ -34,7 +40,7 @@ score_pen.speed(0)
 score_pen.color("white")
 score_pen.penup()
 score_pen.setposition(-290, 275)
-scorestring = "Score: %s" %score
+scorestring = "Score: {}".format(score)
 score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
 score_pen.hideturtle()
 
@@ -46,28 +52,29 @@ player.penup()
 player.speed(0)
 player.setposition(0,-250)
 player.setheading(90)
-
-playerspeed = 15
+player.speed = 0
 
 #Player Movement Left-Right
 def move_left():
-    x = player.xcor()
-    x -= playerspeed
-    if x <-280:
-        x = -280
-    player.setx(x)
+    player.speed = -2
 
 def move_right():
+    player.speed = 2
+
+def move_player() :
     x = player.xcor()
-    x += playerspeed
+    x += player.speed
     if x > +280:
         x = +280
+    if x < -280:
+        x = -280
     player.setx(x)
 
 def fire_gun():
     #declare gunstate as a global
     global gunstate
     if gunstate == "ready":
+        play_sound_async('laser.wav')
         gunstate = "fire"
         #gun position just above player
         x = player.xcor()
@@ -83,10 +90,10 @@ def isCollision(t1, t2):
 		return False
      
 #Keyboard Bindings
-turtle.listen()
-turtle.onkey(move_left,"Left")
-turtle.onkey(move_right, "Right")
-turtle.onkey(fire_gun, "space")
+myscreen.listen()
+myscreen.onkeypress(move_left,"Left")
+myscreen.onkeypress(move_right, "Right")
+myscreen.onkeypress(fire_gun, "space")
 
 #Player's Gun
 gun = turtle.Turtle()
@@ -98,7 +105,7 @@ gun.setheading(90)
 gun.shapesize(0.5, 0.5)
 gun.hideturtle()
 
-gunspeed = 20
+gunspeed = 5
 
 #Define gun state
 #ready - ready to fire
@@ -108,7 +115,7 @@ gunstate = "ready"
 
 
 #Number of enemies
-number_of_enemies = 5
+number_of_enemies = 20
 #List
 enemies = []
 
@@ -117,6 +124,10 @@ for i in range(number_of_enemies):
      #enemy creation
      enemies.append(turtle.Turtle())
 
+enemy_start_x = -225
+enemy_start_y = 250
+enemy_number = 0
+
 #Enemies
 for enemy in enemies:
         #enemy = turtle.Turtle()
@@ -124,14 +135,20 @@ for enemy in enemies:
         enemy.shape("invader.gif")
         enemy.penup()
         enemy.speed(0)
-        x = random.randint(-200, 200)
-        y = random.randint(100, 250)
+        x = enemy_start_x + (50 * enemy_number)
+        y = enemy_start_y 
         enemy.setposition(x, y)
+        enemy_number += 1
+        if enemy_number == 10:
+             enemy_start_y -= 50
+             enemy_number = 0
 
-enemyspeed = 2
+enemyspeed = 0.2
 
 #Game loop
 while True:
+    myscreen.update()
+    move_player()
 
     for enemy in enemies:
         #enemy movement
@@ -156,23 +173,23 @@ while True:
 
         #collision check between enemy and shot
         if isCollision(gun, enemy):
+            play_sound_async('explosion.wav')
             #reset shot
             gun.hideturtle()
             gunstate = "ready"
             gun.setposition(0, -400)
             #Reset enemy
-            x = random.randint(-200, 200)
-            y = random.randint(100, 250)
-            enemy.setposition(x, y)
+            enemy.setposition(0, 10000)
             #score count
             score += 10
-            scorestring = "Score: %s" %score
+            scorestring = "Score: {}".format(score)
             score_pen.clear()
             score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
 
 
 
         if isCollision(player, enemy):
+            play_sound_async('explosion.wav')
             player.hideturtle()
             enemy.hideturtle()
             print ("Game Over")
@@ -189,6 +206,3 @@ while True:
         gun.hideturtle()
         gunstate = "ready"
     
-
-
-delay =  input("Press enter to finish.")
