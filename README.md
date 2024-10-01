@@ -11,52 +11,55 @@ A simple Space Invaders clone using Python and the Turtle graphics library. Play
 
 ## Features
 
-- Customizable number of enemies
-- Player movement with keyboard (left/right arrow keys)
-- Firing bullets with spacebar
-- Collision detection between bullets and enemies
-- Game over condition when the player collides with an enemy
+- **Player Movement:** Move your spaceship left and right.
+- **Shooting:** Fire bullets to destroy enemies.
+- **Enemies:** Invaders move horizontally and drop down after hitting the screen edge.
+- **Score System:** Score increases by 10 for each enemy destroyed.
+- **Sound Effects:** Laser fire and explosions are accompanied by sounds.
 
 ## Installation
 
 1. **Clone the repository:**
+   
+   Clone this repository to your local machine using the following command:
 
    ```bash
    git clone https://github.com/yourusername/space-invaders-clone.git
 
-2. **Navigate to the project directory:**
+3. **Install Dependencies:**
+
+   The game uses the turtle module (built-in with Python) and playsound for sound effects. To install playsound, run:
 
    ```bash
-   cd space-invaders-clone
+   pip install wheel   
+   pip install playsound
 
-3. **Run the game:**
+4. **Download Assets:**
 
-   Make sure you have Python 3 installed on your machine. Run the Python script using the following command:
+   Ensure that the required image and sound assets (```invader.gif```, ```player.gif```, ```space_invaders_background.gif```, ```laser.wav```, ```explosion.wav```) are located in the same directory as the script.
 
-   ```bash
+5. **Run the Game:** Run the ```space_invaders.py``` file using Python:
+   ```
    python space_invaders.py
    ```
-
-4. **Dependencies:**
-
-   Ensure the ```turtle``` and ```random``` modules are available in your Python environment. They should come pre-installed with Python.
-
 ## How to Play
 
- - Use the left and right arrow keys to move your spaceship.
- * Press spacebar to shoot.
- + Destroy all enemies to win the game.
+ - The goal of the game is to destroy as many enemies as possible while avoiding collision with them.
+ - You control a spaceship that can move left and right at the bottom of the screen.
+ - Use the spacebar to fire bullets to destroy incoming invaders.
  - Avoid enemies colliding with your spaceship, or the game is over!
 
 ## Game Mechanics
 
- - Player Movement: You can move left and right with a fixed speed of 15 units.
- - Shooting: The player can shoot bullets, but only one at a time. Once the bullet hits an enemy or moves off-screen, you can shoot again.
- - Enemies: A group of enemies moves from side to side, descending slowly. If any enemy touches your spaceship, it's game over.
- - Enemy Speed: Enemies move faster as they descend, adding more challenge as the game progresses.
+1. **Enemies:**
+   - Enemies move horizontally and change direction after hitting the screen edges.
+   - When an enemy hits the edge, all enemies drop down and move in the opposite direction.
 
+2. **Collision Detection:**
+   - If a bullet hits an enemy, the enemy disappears, and the score increases by 10 points.
+   - If an enemy collides with the player, the game ends, and "Game Over" is displayed in the console.
 
+3. **Scoring:**
+   - The game plays a laser sound (```laser.wav```) when you fire a bullet.
+   - An explosion sound (```explosion.wav```) is played when an enemy is hit or when the player collides with an enemy.
 
-
-
- *UNDER CONSTRUCTION...*
