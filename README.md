@@ -59,7 +59,7 @@ A simple Space Invaders clone using Python and the Turtle graphics library. Play
    - If a bullet hits an enemy, the enemy disappears, and the score increases by 10 points.
    - If an enemy collides with the player, the game ends, and "Game Over" is displayed in the console.
 
-3. **Scoring:**
+3. **Audio:**
    - The game plays a laser sound (```laser.wav```) when you fire a bullet.
    - An explosion sound (```explosion.wav```) is played when an enemy is hit or when the player collides with an enemy.
 
