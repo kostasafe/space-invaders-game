@@ -28,17 +28,18 @@ A simple Space Invaders clone using Python and the Turtle graphics library. Play
 
 3. **Install Dependencies:**
 
-   The game uses the turtle module (built-in with Python) and playsound for sound effects. To install playsound, run:
+   The game uses the turtle module (built-in with Python) and playsound for sound effects.
+   To install playsound, run:
 
    ```bash
    pip install wheel   
    pip install playsound
 
-4. **Download Assets:**
+5. **Download Assets:**
 
    Ensure that the required image and sound assets (```invader.gif```, ```player.gif```, ```space_invaders_background.gif```, ```laser.wav```, ```explosion.wav```) are located in the same directory as the script.
 
-5. **Run the Game:** Run the ```space_invaders.py``` file using Python:
+6. **Run the Game:** Run the ```space_invaders.py``` file using Python:
    ```
    python space_invaders.py
    ```
