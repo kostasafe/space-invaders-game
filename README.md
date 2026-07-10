@@ -1,6 +1,6 @@
 # Space Invaders Game Clone
 
-A simple Space Invaders clone using Python and the Turtle graphics library. Players control a spaceship that shoots at enemies descending from the top of the screen. The goal is to defeat all enemies while avoiding being hit.
+A simple Space Invaders clone using Python and the Turtle graphics library. Player controls a spaceship that shoots at enemies descending from the top of the screen. The goal is to defeat all enemies while avoiding being hit.
 
 ## Table of Contents
 
